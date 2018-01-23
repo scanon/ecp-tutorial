@@ -1,4 +1,4 @@
-# Second hands-on - Shifter
+# Second hands-on - HPC
 
 ## Logging in to NERSC
 
@@ -8,7 +8,7 @@ Use ssh to connect to Cori.  The username and password will be on the training a
 ssh <account>@cori.nersc.gov
 ```
 
-## Pulling an image
+## Pulling an image with Shifter
 
 Pull an image using shifterimg.  You can pull a standard image such as Ubuntu or an image you pushed to dockerhub in the previous session.
 
@@ -18,12 +18,12 @@ shifterimg pull ubuntu:14.04
 shifterimg pull scanon/shanetest:latest
 ```
 
-## Running an image interactively
+## Running an image interactively with Shifter
 
 Use salloc and shifter to test the image.
 
 ```bash
-salloc -N 1 -C haswell -p regular --reservation=sc17_shifter --image ubuntu:14.04 -A ntrain
+salloc -N 1 -C haswell -q regular --reservation=ecp_tut --image ubuntu:14.04 -A ntrain
 shifter bash
 ```
 
@@ -48,28 +48,28 @@ Now create a batch submission script and try running a batch job with shifter.  
 cat << EOF > submit.sl
 #!/bin/bash
 #SBATCH -N 1 -C haswell
-#SBATCH --reservation=sc17_shifter
-#SBATCH -p regular
+#SBATCH --reservation=ecp_tut
+#SBATCH -q regular
 #SBATCH -A ntrain
 #SBATCH --image ubuntu:latest
 
 srun -N 1 shifter /app/app.py
 EOF
 ```
-Use the Slurm sbatch command to submit the script.
+Use the SLURM sbatch command to submit the script.
 
 ```bash
 sbatch ./submit.sl
 ```
 
-## Running a parallel Python MPI job
+## Running a parallel Python MPI job with Shifter
 
 It is possible to run MPI jobs in Shifter and obtain native performance.  There are several ways to achieve this. We will demonstrate one approach here.
 
 On your laptop create and push a docker image with MPICH and a sample application installed.
 
 
-First, create and save a Hello World MPI application.
+First, create and save a Hello World MPI application.  You can find the code in the examples/shifter directory too.
 ```code
 // Hello World MPI app
 #include <mpi.h>
@@ -118,7 +118,7 @@ Next, return to your Cori login, pull your image down and run it.
 ```bash
 shifterimg pull <mydockerid>/hellompi:latest
 #Wait for it to complete
-salloc -N 2 -C haswell -p regular -A ntrain --reservation=sc17_shifter --image <mydockerid>/hellompi:latest
+salloc -N 2 -C haswell -q regular -A ntrain --reservation=ecp_tut --image <mydockerid>/hellompi:latest
 # Wait for prepare_compilation_report
 # Cori has 32 physical cores per node with 2 hyper-threads per core.  
 # So you can run up to 64 tasks per node.
@@ -128,7 +128,7 @@ exit
 
 If you have your own MPI applications, you can attempt to Docker-ize them using the steps above and run it on Cori.  As a courtesy, limit your job sizes to leave sufficient resources for other participants.  _Don't forget to exit from any "salloc" shells once you are done testing._
 
-## Using Volume mounts
+## Using Volume mounts with Shifter
 
 Like Docker, Shifter allows you to mount directories into your container.
 The syntax is similar to Docker but uses "--volume".  Here we will mount a
