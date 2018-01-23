@@ -36,7 +36,7 @@ Please raise your hand if you need assistance. You can also ask questions on thi
       - Using Charliecloud (NERSC)
       - Using Shifter (NERSC)
       - Using Singularity (ORNL)
-    - [Advanced Use Cases](04-advanced)
+    - [Advanced Use Cases](04-advanced.md)
       - MPI versions and hardware access
       - Considerations for Charliecloud, Shifter and Singularity
       - Considerations for non-x86 architectures
