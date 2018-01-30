@@ -11,7 +11,7 @@ This is hands-on tutorial. Participants should bring a laptop and pre-install Do
 For more detailed instructions, see [Setup](setup.md).
 
 ## Communication
-Please raise your hand if you need assistance. You can also ask questions on this [Google Doc](https://docs.google.com/document/d/18N_yE7D7hAvrbpuhfhnjc1M-Eok6nE9d4IxrHeuqMgo/edit?usp=sharing).
+Please raise your hand if you need assistance. You can also ask questions on this [Google Doc](https://docs.google.com/document/d/1UYGPcGbq_wrvktBVSp5k41cQLkpap1WeNq_P3z1eT6s/edit?usp=sharing).
 
 ## Agenda
 

@@ -46,25 +46,27 @@ hello
 
 ## Creating and building a Dockerfile
 
-While manually modifying and commiting changes is one way to build images, using a Dockerfile provides a way to build images so that others can understand how the image was constructed and make modifications.
+While manually modifying and committing changes is one way to build images, using a Dockerfile provides a way to build images so that others can understand how the image was constructed and make modifications.
 
 A Dockerfile has many options.  We will focus on a few basic ones (FROM, MAINTAINER, ADD, and RUN)
 
 Create a simple shell script called script in your local directory using your favorite editor.
 
 ```
+cat > hello << EOF
 #!/bin/bash
-echo "Lisa says Hello World!"
+echo "Shane says Hello World!"
+EOF
 ```
 
 Now create a file called Dockerfile in the same directory with contents similar to this.  Use your own name and e-mail for the maintainer.
 
 ```
 FROM ubuntu:14.04
-MAINTAINER Lisa Gerhardt <lgerhardt@lbl.gov>
+MAINTAINER Shane Canon <scanon@lbl.gov>
 
-ADD ./input_files/script /bin/script
-RUN mv /bin/script /bin/hello && chmod a+rx /bin/hello
+ADD ./hello /bin/hello
+RUN chmod a+rx /bin/hello
 ```
 
 Now build the image using the docker build command.  Be sure to use the `-t` option to tag it.  Tell the Dockerfile to build using the current directory by specifying `.`.  Alternatively you could place the Dockerfile and script in an alternate location and specify that directory in the docker build command.
@@ -119,7 +121,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 ```
-Hints: 
+Hints:
 * You can start with the image "nersc/ubuntu-mpi:14.04". It already has MPI installed.
 * You compile with "mpicc helloworld.c -o /app/hello"
 
@@ -167,4 +169,3 @@ hello from 6 of 10 on 982d980864e5
 hello from 1 of 10 on 982d980864e5
 
 </p></details>
-
