@@ -119,8 +119,10 @@ Once created compile and run the MPI sample, as you did with the Docker example.
 singularity exec <container> <command>
 ```
 <details>
-  <summary>Expand to see solution</summary>
-  <p>
+  <summary>Expand to see solution</summary><p>
+  
+We begin by compiling
+  
 ```
 foo@<id>:~$ singularity exec mpi.img mpicc helloworld.c -o hello
 ```
