@@ -113,8 +113,14 @@ mpi.def  mpi.img
 ```
 
 ## Running the Singularity container
-In the same directory as our Singularity container `mpi.img` create a file of the sample MPI application `helloworld.c`. 
-We can then compile using the syntax `singularity exec <container> <command>`
+Outside of our Singularity container lets create a copy of the sample MPI application `helloworld.c`. 
+Once created compile and run the MPI sample, as you did with the Docker example. To execute a command in the container you will use the following
+```
+singularity exec <container> <command>
+```
+<details>
+  <summary>Expand to see solution</summary>
+  <p>
 ```
 foo@<id>:~$ singularity exec mpi.img mpicc helloworld.c -o hello
 ```
@@ -140,3 +146,4 @@ hello from 8 of 10 on <id>
 hello from 9 of 10 on <id>
 hello from 6 of 10 on <id>
 ```
+</p></details>
