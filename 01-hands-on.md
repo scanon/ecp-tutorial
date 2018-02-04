@@ -278,7 +278,7 @@ Type `exit` to return to our "host".
 
 
 ## Creating and building a Singularity recipe
-Let's use a Singularity definition file to run the `MPI example`. The recipe, which we'll create in a file called `mpi.def` will be:
+Let's use a Singularity definition file to run the  [MPI sample](#hands-on-activity-mpi-hello-world). The recipe, which we'll create in a file called `mpi.def` will be:
 
 * The first line should define the bootstrap method, we'll use docker
   * `BootStrap: docker`
