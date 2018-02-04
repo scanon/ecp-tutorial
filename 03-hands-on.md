@@ -141,7 +141,7 @@ shifter --volume $SCRATCH/input:/data --image=ubuntu bash
 cat /data/data.txt
 ```
 
-## Logging into OLCF
+## Logging into the OLCF
 Use ssh to connect to Titan. The account name will be on your RSA token envelope, e.g. `csep123`. To setup your account the steps are as follows
 
 * `ssh <csep#>@titan.ccs.ornl.gov`
@@ -171,12 +171,12 @@ Although users are free to build their own Singularity container from scratch an
  with vendor specific software such as MPI and CUDA pre-installed.
  
 ## Using container-builder
-To see how `container-builder` work we'll create a container capable of running mpi4py and CUDA applications on Titan. You are free to use 
-either Dockerfile or Singularity file syntax, `container-builder` will automatically detect the type and build the Singularity container accordingly.
+To see how `container-builder` works we'll create a container capable of running mpi4py and CUDA applications on Titan. You are free to use 
+either Dockerfile or Singularity recipe syntax, `container-builder` will automatically detect the type and build the Singularity container accordingly.
 
 * Create the recipe file, `mpi.def`
 * Use the following base image `olcf/titan:ubuntu-16.04_2018-01-18`
-  * This image is based off of Ubuntu/16.04 and includes a snapshot of Titan's MPI/CUDA software stack on 2018-01-18
+  * This image is based on Ubuntu/16.04 and includes a snapshot of Titan's MPI/CUDA software stack from 2018-01-18
 * Install mpi4py, `pip install mpi4py`
 
 Now to build our recipe into a Singularity image, `mpi.img`
@@ -194,7 +194,7 @@ mpi.def  mpi.img
 
 ## Running a Python container on Titan
 Lets first begin by entering an interactive batch job, reserving (2) compute nodes. 
-We will then return to the scratch directory, and load the Singularity module
+We will then return to the scratch directory and load the Singularity module
 ```
 $ qsub -I -ATRN001 -lwalltime=02:00:00,nodes=2
 qsub: waiting for job <id> to start
@@ -204,7 +204,7 @@ $ cd /lustre/atlas/scratch/<csep#>/trn001
 $ module load singularity
 ```
 
-Create HelloMPI.py in the current directory with the following format
+Create `HelloMPI.py` in the current directory with the following format
 ```
 from mpi4py import MPI
 import sys
@@ -216,16 +216,23 @@ rank = MPI.COMM_WORLD.Get_rank()
 sys.stdout.write("Hello from mpi4py %s : rank %d of %d \n" % (platform.linux_distribution(), rank, size))
 ```
 
-We can now launch our compute job using Cray's `aprun` command. For simplicity we launch (2) MPI processes in total, (1) per node
+We can use Cray's `aprun` utility to launch (1) instance of `command` per node across (2) nodes using the following syntax
+```
+$ aprun -n 2 -N 1 <command>
+```
+
+Try and construct an `aprun` command to execute the python example, `python HelloMPI.py`, inside of the singularity image `mpi.img`.
+
+<details> <summary>Expand to see solution</summary><p>
+  
 ```
 $ aprun -n 2 -N 1 singularity exec ./mpi.img python ./HelloMPI.py
 Hello from mpi4py ('Ubuntu', '16.04', 'xenial') : rank 1 of 2 
 Hello from mpi4py ('Ubuntu', '16.04', 'xenial') : rank 0 of 2
 ```
+</p></details>
 
-Singularity is orthogonal to the job launcher, `aprun`, that is usage doesn't change in our HPC setting.
-
-## Running CUDA on Titan
+## Running a CUDA container on Titan
 You should still be in an interactive batch job, if not run the `qsub` command from the previous exercise. 
 
 Create HelloCuda.cu in the current directory with the following format
@@ -249,12 +256,19 @@ int main( int argc, char* argv[] )
 }
 ```
 
-Now to compile using the CUDA compiler, `nvcc`
+The CUDA compiler, `nvcc`, has similar basic syntax to gcc, using `mpi.img` compile `HelloCuda.cu` into `HelloCuda.out` and then run 
+ on a single node using the launch command `aprun -n 1 <command>`
+ 
+<details> <summary>Expand to see solution</summary><p>
+ 
+Compile
 ```
 $ singularity exec nvcc HelloCuda.cu -o HelloCuda.out
 ```
 
-And running
+And run
 ```
 $ aprun -n 1 singularity exec ./mpi.img ./HelloCuda.out 
 ```
+
+</p></details>
