@@ -292,15 +292,15 @@ Now to build our image, `mpi.img`
 ```
 foo@<id>:~$ sudo singularity build mpi.img mpi.def
 ```
-If the image built successfully we should be able to see it `mpi.img` the current directory
+If the image built successfully we should be able to see it, `mpi.img`, the current directory
 ```
 foo@<id>:~$ ls
 mpi.def  mpi.img
 ```
 
 ## Running in a Singularity container
-Outside of our Singularity container lets create a copy of the sample MPI application `helloworld.c`. 
-Once created compile and run the MPI sample, as you did with the Docker example. To execute a command in the container you will use the following
+On the host lets create a copy of the sample MPI application `helloworld.c`. 
+Once the source is created compile and run the [MPI sample](#hands-on-activity-mpi-hello-world), as you did with the Docker example. To execute a command in the container you will use the following
 ```
 singularity exec <container> <command>
 ```
