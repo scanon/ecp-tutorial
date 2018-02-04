@@ -218,7 +218,7 @@ To create a Docker image containing Singularity we'll use the following recipe
   ```
   </p></details>
 
-## Running
+## Running Docker images with Singularity
 Now lets see how Singularity behaves at runtime. To do so we'll enter an interactive shell within our Docker container.
 To run nested containers we will need to add `--privileged`.
 
@@ -298,7 +298,7 @@ foo@<id>:~$ ls
 mpi.def  mpi.img
 ```
 
-## Running the Singularity container
+## Running in a Singularity container
 Outside of our Singularity container lets create a copy of the sample MPI application `helloworld.c`. 
 Once created compile and run the MPI sample, as you did with the Docker example. To execute a command in the container you will use the following
 ```
