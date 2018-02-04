@@ -208,6 +208,7 @@ RUN pip install mpi4py
 
 </p></details>
 
+---------------------------------------
 
 Now to build our recipe into a Singularity image, `mpi.img`
 ```
