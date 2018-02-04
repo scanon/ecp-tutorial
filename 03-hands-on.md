@@ -181,6 +181,8 @@ either Dockerfile or Singularity recipe syntax, `container-builder` will automat
 * Install mpi4py, `pip install mpi4py`
 
 <details> <summary>Expand to see Singularity solution</summary><p>
+
+```
 BootStrap: docker
 From: olcf/titan:ubuntu-16.04_2018-01-18
 
@@ -189,18 +191,23 @@ apt-get -y update
 apt-get -y install python-pip
 
 pip install mpi4py
+```
 
 </p></details>
 
 <details> <summary>Expand to see Docker solution</summary><p>
+
+```
 FROM olcf/titan:ubuntu-16.04_2018-01-18
 
 RUN apt-get -y update && \
     apt-get -y install python-pip
 
 RUN pip install mpi4py
+```
 
 </p></details>
+
 
 Now to build our recipe into a Singularity image, `mpi.img`
 ```
