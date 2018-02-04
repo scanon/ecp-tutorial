@@ -179,7 +179,7 @@ is still a good exercise, although you may install and run Singularity directly 
 ## Singularity Dockerfile
 To create a Docker image containing Singularity we'll use the following recipe
 
-* Create a new folder to store your `Dockerfile`
+* Create a new folder on your host system to store your `Dockerfile`
 * Use `ubuntu:17.10` as the base image
 * Install system packages required to build and run Singularity
   * `apt-get -y update && apt-get -y install vim sudo wget git autoconf libtool build-essential python squashfs-tools`
@@ -220,7 +220,7 @@ To create a Docker image containing Singularity we'll use the following recipe
 
 ## Running
 Now lets see how Singularity behaves at runtime. To do so we'll enter an interactive shell within our Docker container.
-`--privileged` is needed to run nested containers.
+To run nested containers we will need to add `--privileged`.
 
 ```
 $ docker run -it --privileged singularity:2.4.2 
@@ -231,7 +231,8 @@ First lets verify that singularity is installed correctly
 foo@<id>:~$ singularity --version
 2.4.2-dist
 ```
-Now we should be the user `foo` and in `/home/foo`, as specified in the Dockerfile
+Now we should be the user `foo` and in `/home/foo`, as specified in the Dockerfile. For the rest of the tutorial we should 
+forget that this we're in a Docker container and consider it our host system.
 ```
 foo@<id>:~$ whoami
 foo
@@ -241,7 +242,14 @@ foo@<id>:~$ pwd
 /home/foo
 ```
 
-Singularity can easily run images directly from Docker Hub
+Lets create a file, `bar`, in `foo`'s home directory
+```
+foo@<id>:~$ touch bar
+foo@<id>:~$ ls
+bar
+```
+
+Singularity can easily run Docker images. To get an interactive shell in ubuntu:17.10 from Docker Hub we can use the following 
 ```
 foo@<id>:~$ singularity shell docker://ubuntu:17.10
 ```
@@ -256,11 +264,17 @@ foo
 Singularity ubuntu:17.10:~> pwd
 /home/foo
 ```
-When running a Singularity container your user inside of the container is the same as your user outside of the container.
-You also have access to many of the same directories inside of the container that your user has outside of the container. This is
+
+```
+Singularity ubuntu:17.10:~> ls
+bar
+```
+
+When running a Singularity container your user inside of the container is the same as your user on the host. 
+You also have access to the same user directories inside of the container that your user has outside of the container. This is
 is in contrast to the Docker default where you run as root with no host directories mounted.
 
-`exit` the interactive Singularity shell and return to our Docker container with Singularity installed. 
+Type `exit` to return to our "host". 
 
 
 ## Creating and building a Singularity recipe
@@ -270,7 +284,7 @@ Let's use a Singularity definition file to run the `MPI example`. The recipe, wh
   * `BootStrap: docker`
 * When using docker bootstrap we need to specify the Docker Hub image
   * `From: ubuntu:17.10`
-* The `%post` section, which is an `sh` script that runs after the bootstrap process, will do the following
+* The `%post` section, which is an `sh` script that runs after the bootstrap process, will install mpich
   * `apt-get -y update`
   * `apt-get -y install mpich`
 
