@@ -40,7 +40,7 @@ Please raise your hand if you need assistance. You can also ask questions on thi
     - [Hands-on HPC](03-hands-on.md)
       - Using Charliecloud (NERSC)
       - Using Shifter (NERSC)
-      - Using Singularity (ORNL)
+      - [Using Singularity (ORNL)](03-hands-on.md#logging-into-olcf)
     - [Advanced Use Cases](04-advanced.md)
       - MPI versions and hardware access
       - Considerations for Charliecloud, Shifter and Singularity
