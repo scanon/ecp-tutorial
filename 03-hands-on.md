@@ -256,8 +256,8 @@ int main( int argc, char* argv[] )
 }
 ```
 
-The CUDA compiler, `nvcc`, has similar basic syntax to gcc, using `mpi.img` compile `HelloCuda.cu` into `HelloCuda.out` and then run 
- on a single node using the launch command `aprun -n 1 <command>`
+The CUDA compiler, `nvcc`, has similar basic syntax to gcc, using `mpi.img` compile `HelloCuda.cu` into `HelloCuda.out`.
+  Once compiled run on a single node using the launch command `aprun -n 1 <command>`
  
 <details> <summary>Expand to see solution</summary><p>
  
