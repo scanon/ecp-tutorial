@@ -24,6 +24,11 @@ Please raise your hand if you need assistance. You can also ask questions on thi
       - [Making changes and committing them](01-hands-on.md#making-changes-and-committing-them)
       - [Creating and building a Dockerfile](01-hands-on.md#creating-and-building-a-dockerfile)
       - [Pushing a Dockerfile to dockerhub](01-hands-on.md#pushing-a-dockerfile-to-dockerhub)
+      - [Intro to Singularity](01-hands-on.md#intro-to-singularity)
+      - [Singularity Dockerfile](01-hands-on.md#singularity-dockerfile)
+      - [Running Docker images with Singularity](01-hands-on.md#running-docker-images-with-singularity)
+      - [Creating and building a Singularity recipe](01-hands-on.md#creating-and-building-a-singularity-recipe)
+      - [Running in a Singularity container](01-hands-on.md#running-in-a-singularity-container)
 - 14:45: Break
     - Distribute of NERSC and ORNL logins. **Please obtain logins from tutorial staff during the break**
 - 15:00: [Containers and HPC](02-hpc.md)
