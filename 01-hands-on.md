@@ -300,7 +300,7 @@ mpi.def  mpi.img
 
 ## Running in a Singularity container
 On the host lets create a copy of the sample MPI application `helloworld.c`. 
-Once the source is created compile and run the [MPI sample](#hands-on-activity-mpi-hello-world), as you did with the Docker example. To execute a command in the container you will use the following
+Once the source is created compile and run the [MPI sample](01-hands-on.md#hands-on-activity-mpi-hello-world), as you did with the Docker example. To execute a command in the container you will use the following
 ```
 singularity exec <container> <command>
 ```
