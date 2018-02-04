@@ -293,7 +293,7 @@ The CUDA compiler, `nvcc`, has similar basic syntax to gcc, using `mpi.img` comp
 <details> <summary>Expand to see solution</summary><p>
  
 ```
-$ singularity exec nvcc HelloCuda.cu -o HelloCuda.out
+$ singularity exec ./mpi.img nvcc HelloCuda.cu -o HelloCuda.out
 
 $ aprun -n 1 singularity exec ./mpi.img ./HelloCuda.out 
 ```
