@@ -48,6 +48,15 @@ hello
 
 While manually modifying and committing changes is one way to build images, using a Dockerfile provides a way to build images so that others can understand how the image was constructed and make modifications.
 
+Before starting, create an empty working directory and change into it.  This is
+important because Docker will make a temporary copy of the contents of the
+working directory including subdirectories.
+
+```bash
+mkdir ecp_docker
+cd ecp_docker
+```
+
 A Dockerfile has many options.  We will focus on a few basic ones (FROM, MAINTAINER, ADD, and RUN)
 
 Create a simple shell script called script in your local directory using your favorite editor.
@@ -188,20 +197,20 @@ To create a Docker image containing Singularity we'll use the following recipe
   * `sudo` is not needed as you are running the build as `root`
 * For demonstration purposes we'll setup a user named `foo` and tell docker to run under this user
   * `RUN useradd -ms /bin/bash foo && usermod -aG sudo foo && passwd -d foo`
-  * `USER foo` 
+  * `USER foo`
   * `WORKDIR /home/foo`
 * Build the Docker container and name it `singularity:2.4.2`
 
 <details>
   <summary>Expand to see solution Dockerfile</summary>
   <p>
-  
+
   ```
   FROM ubuntu:17.10
-       
+
   RUN apt-get -y update && \
       apt-get -y install vim sudo git wget autoconf libtool build-essential python squashfs-tools
-     
+
   RUN VERSION=2.4.2 && \
       wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz && \
       tar xvf singularity-$VERSION.tar.gz && \
@@ -209,7 +218,7 @@ To create a Docker image containing Singularity we'll use the following recipe
       ./configure --prefix=/usr/local && \
       make && \
       make install
-     
+
   RUN useradd -ms /bin/bash foo && \
       usermod -aG sudo foo && \
       passwd -d foo
@@ -223,7 +232,7 @@ Now lets see how Singularity behaves at runtime. To do so we'll enter an interac
 To run nested containers we will need to add `--privileged`.
 
 ```
-$ docker run -it --privileged singularity:2.4.2 
+$ docker run -it --privileged singularity:2.4.2
 ```
 
 First lets verify that singularity is installed correctly
@@ -231,7 +240,7 @@ First lets verify that singularity is installed correctly
 foo@<id>:~$ singularity --version
 2.4.2-dist
 ```
-Now we should be the user `foo` and in `/home/foo`, as specified in the Dockerfile. For the rest of the tutorial we should 
+Now we should be the user `foo` and in `/home/foo`, as specified in the Dockerfile. For the rest of the tutorial we should
 forget that this we're in a Docker container and consider it our host system.
 ```
 foo@<id>:~$ whoami
@@ -249,7 +258,7 @@ foo@<id>:~$ ls
 bar
 ```
 
-Singularity can easily run Docker images. To get an interactive shell in ubuntu:17.10 from Docker Hub we can use the following 
+Singularity can easily run Docker images. To get an interactive shell in ubuntu:17.10 from Docker Hub we can use the following
 ```
 foo@<id>:~$ singularity shell docker://ubuntu:17.10
 ```
@@ -270,11 +279,11 @@ Singularity ubuntu:17.10:~> ls
 bar
 ```
 
-When running a Singularity container your user inside of the container is the same as your user on the host. 
+When running a Singularity container your user inside of the container is the same as your user on the host.
 You also have access to the same user directories inside of the container that your user has outside of the container. This is
 is in contrast to the Docker default where you run as root with no host directories mounted.
 
-Type `exit` to return to our "host". 
+Type `exit` to return to our "host".
 
 
 ## Creating and building a Singularity recipe
@@ -299,16 +308,16 @@ mpi.def  mpi.img
 ```
 
 ## Running in a Singularity container
-On the host lets create a copy of the sample MPI application `helloworld.c`. 
+On the host lets create a copy of the sample MPI application `helloworld.c`.
 Once the source is created compile and run the [MPI sample](#hands-on-activity-mpi-hello-world), as you did with the Docker example. To execute a command in the container you will use the following
 ```
 singularity exec <container> <command>
 ```
 <details>
   <summary>Expand to see solution</summary><p>
-  
+
 We begin by compiling
-  
+
 ```
 foo@<id>:~$ singularity exec mpi.img mpicc helloworld.c -o hello
 ```
